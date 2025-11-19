@@ -1,108 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mycelia.im | Grow the Network</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="mycelia.im is a landmark domain for decentralized communication layers, oracle networks, and resilient, intelligent Web3 protocols.">
-    <meta name="keywords" content="mycelia, mycelial, network, web3, decentralized, oracle, communication, protocol, unearth.im">
-    <meta name="author" content="unearth.im">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="mycelia.im | Grow the Network">
-    <meta property="og:description" content="The forest's true strength is not in the trees you see, but in the invisible, intelligent network beneath the soil.">
-    <meta property="og:image" content="https://placehold.co/1200x630/F8F7F4/A95C3D?text=mycelia.im">
-    <meta property="og:url" content="https://mycelia.im">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="mycelia.im | Grow the Network">
-    <meta name="twitter:description" content="The forest's true strength is not in the trees you see, but in the invisible, intelligent network beneath the soil.">
-    <meta name="twitter:image" content="https://placehold.co/1200x630/F8F7F4/A95C3D?text=mycelia.im">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@400..700&display=swap" rel="stylesheet">
-    
+    <title>Mycelial Network - Language as Organism</title>
     <style>
-        /* Based on the unearth.im "Earth & Ink" Brand Guide */
-        body {
-            background-color: #F8F7F4; /* Off-White */
-            color: #2E2E2E; /* Charcoal */
-            font-family: 'Lora', serif; /* Narrative Font */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        :root {
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
 
-        .narrative-font { font-family: 'Lora', serif; }
-        .ui-font { font-family: 'Inter', sans-serif; }
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.2s ease-in-out;
-            border: 2px solid transparent;
-            display: inline-block;
-        }
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
 
-        .btn-primary {
-            background-color: #A95C3D; 
-            color: #F8F7F4;
-            border-color: #A95C3D;
-        }
+  --radius-base: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+}
 
-        .btn-primary:hover {
-            background-color: #934F35;
-            border-color: #934F35;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .fade-in {
-            animation: fadeIn 1.5s ease-in-out;
-        }
+body {
+    font-family: var(--font-family-base);
+    overflow: hidden;
+    background: #0a0a0a;
+    color: rgba(200, 220, 240, 0.9);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+#mycelialCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, #1a1510 0%, #0a0a0a 70%);
+}
+
+.ui-overlay {
+    position: fixed;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.ui-overlay * {
+    pointer-events: auto;
+}
+
+/* Intro Modal */
+.intro-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.intro-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content {
+    max-width: 700px;
+    padding: var(--space-32);
+    text-align: center;
+}
+
+.intro-content h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: rgba(50, 200, 220, 0.95);
+    margin-bottom: var(--space-16);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(50, 200, 220, 0.5);
+}
+
+.intro-content .subtitle {
+    font-size: var(--font-size-lg);
+    color: rgba(150, 200, 180, 0.8);
+    margin-bottom: var(--space-24);
+    font-style: italic;
+}
+
+.intro-content p {
+    font-size: var(--font-size-base);
+    color: rgba(180, 200, 200, 0.85);
+    line-height: 1.7;
+    margin-bottom: var(--space-16);
+}
+
+.mythology-box {
+    background: rgba(30, 60, 60, 0.15);
+    border: 1px solid rgba(50, 200, 220, 0.25);
+    border-radius: var(--radius-lg);
+    padding: var(--space-20);
+    margin-top: var(--space-24);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    color: rgba(160, 200, 190, 0.9);
+}
+
+.begin-btn {
+    margin-top: var(--space-32);
+    padding: var(--space-12) var(--space-32);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    background: rgba(30, 120, 140, 0.3);
+    color: rgba(80, 220, 240, 0.95);
+    border: 1px solid rgba(50, 200, 220, 0.4);
+    border-radius: var(--radius-base);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family-base);
+}
+
+.begin-btn:hover {
+    background: rgba(30, 120, 140, 0.5);
+    border-color: rgba(50, 200, 220, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(50, 200, 220, 0.3);
+}
+
+/* Text Input */
+.text-input-container {
+    bottom: var(--space-24);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 700px;
+}
+
+.text-input {
+    width: 100%;
+    padding: var(--space-16);
+    background: rgba(15, 25, 25, 0.85);
+    border: 1px solid rgba(50, 200, 220, 0.3);
+    border-radius: var(--radius-lg);
+    color: rgba(200, 230, 240, 0.95);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    resize: none;
+}
+
+.text-input:focus {
+    border-color: rgba(50, 200, 220, 0.6);
+    box-shadow: 0 0 20px rgba(50, 200, 220, 0.2);
+}
+
+.text-input::placeholder {
+    color: rgba(150, 180, 190, 0.4);
+}
+
+/* Controls Bar */
+.controls-bar {
+    top: var(--space-24);
+    right: var(--space-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    background: rgba(15, 25, 25, 0.85);
+    padding: var(--space-16);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(50, 200, 220, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    justify-content: space-between;
+}
+
+.control-label {
+    font-size: var(--font-size-sm);
+    color: rgba(150, 200, 190, 0.8);
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+.slider {
+    width: 120px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: rgba(50, 100, 110, 0.3);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(50, 200, 220, 0.9);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(50, 200, 220, 0.5);
+}
+
+.slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(50, 200, 220, 0.9);
+    cursor: pointer;
+    border: none;
+}
+
+.btn {
+    padding: var(--space-8) var(--space-16);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    background: rgba(30, 120, 140, 0.2);
+    color: rgba(80, 220, 240, 0.9);
+    border: 1px solid rgba(50, 200, 220, 0.3);
+    border-radius: var(--radius-base);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family-base);
+    white-space: nowrap;
+    width: 100%;
+}
+
+.btn:hover {
+    background: rgba(30, 120, 140, 0.4);
+    border-color: rgba(50, 200, 220, 0.5);
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* Artist Modal */
+.artist-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(15px);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.artist-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: rgba(15, 25, 25, 0.95);
+    border: 1px solid rgba(50, 200, 220, 0.3);
+    border-radius: var(--radius-lg);
+    max-width: 800px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: var(--space-32);
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--space-16);
+    right: var(--space-16);
+    background: transparent;
+    border: none;
+    color: rgba(50, 200, 220, 0.8);
+    font-size: 32px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-base);
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background: rgba(30, 120, 140, 0.2);
+    transform: scale(1.1);
+}
+
+.modal-content h2 {
+    font-size: var(--font-size-3xl);
+    color: rgba(50, 200, 220, 0.95);
+    margin-bottom: var(--space-24);
+    text-align: center;
+}
+
+.modal-body {
+    color: rgba(180, 200, 200, 0.85);
+    line-height: 1.7;
+}
+
+.modal-body h3 {
+    font-size: var(--font-size-lg);
+    color: rgba(50, 200, 220, 0.9);
+    margin-top: var(--space-24);
+    margin-bottom: var(--space-12);
+}
+
+.modal-body h3:first-child {
+    margin-top: 0;
+}
+
+.modal-body p {
+    margin-bottom: var(--space-16);
+    font-size: var(--font-size-base);
+}
+
+/* Stats Panel */
+.stats-panel {
+    top: var(--space-24);
+    left: var(--space-24);
+    background: rgba(15, 25, 25, 0.85);
+    padding: var(--space-16);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(50, 200, 220, 0.3);
+    backdrop-filter: blur(10px);
+    font-size: var(--font-size-sm);
+    color: rgba(150, 200, 190, 0.85);
+    min-width: 200px;
+}
+
+.stats-panel h3 {
+    font-size: var(--font-size-base);
+    color: rgba(50, 200, 220, 0.9);
+    margin-bottom: var(--space-12);
+    font-weight: var(--font-weight-semibold);
+}
+
+.stat-line {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--space-8) 0;
+}
+
+.stat-label {
+    color: rgba(150, 180, 190, 0.7);
+}
+
+.stat-value {
+    color: rgba(80, 220, 240, 0.9);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Footer Branding */
+.footer-branding {
+    position: fixed;
+    bottom: var(--space-16);
+    right: var(--space-24);
+    font-size: var(--font-size-xs);
+    color: rgba(50, 200, 220, 0.3);
+    font-family: var(--font-family-base);
+    letter-spacing: 0.02em;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.footer-branding a {
+    color: rgba(50, 200, 220, 0.4);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    pointer-events: auto;
+}
+
+.footer-branding a:hover {
+    color: rgba(50, 200, 220, 0.7);
+}
+
+@media (max-width: 768px) {
+    .controls-bar {
+        top: var(--space-12);
+        right: var(--space-12);
+        padding: var(--space-12);
+    }
+    
+    .stats-panel {
+        top: var(--space-12);
+        left: var(--space-12);
+        padding: var(--space-12);
+        min-width: 160px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .text-input-container {
+        width: 95%;
+    }
+    
+    .slider {
+        width: 80px;
+    }
+}
+
+@font-face {
+    font-family: 'FKGroteskNeue';
+    src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+}
     </style>
 </head>
+<body>
+    <canvas id="mycelialCanvas"></canvas>
+    
+    <!-- Intro Modal -->
+    <div class="intro-modal" id="introModal">
+        <div class="intro-content">
+            <h1>MYCELIAL NETWORK</h1>
+            <p class="subtitle">Language as Living Organism</p>
+            <p>A vast, luminous mycelial network spreading across dark, fertile ground. Each keystroke becomes a glowing node, pulsing with energy, while connections form organically based on letter repetition and typing rhythm.</p>
+            
+            <div class="mythology-box">
+                <strong>The Concept:</strong> Like fungal mycelium connecting trees in a forest, this network visualizes language as an interconnected organism. Fast bursts of typing weave dense clusters of threads, while pauses leave open voids where faint strands fade into shadow. Some filaments blaze with bioluminescence, others dim and recede, creating a living archive of language as fungal architecture—a ceremonial map of human input, half biological, half digital, echoing with memory.
+            </div>
+            
+            <button class="begin-btn" onclick="beginGrowing()">Begin Growing</button>
+        </div>
+    </div>
+    
+    <!-- Artist Statement Modal -->
+    <div class="artist-modal" id="artistModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2>The Mycelial Network: Language as Organism</h2>
+            <div class="modal-body">
+                <h3>Fungal Intelligence &amp; Neural Networks</h3>
+                <p>Mycelial networks represent nature's original internet—vast underground systems where fungi communicate, share resources, and form symbiotic relationships with forest ecosystems. This visualization draws a parallel between fungal networks and the structure of language itself: interconnected, organic, and alive with meaning.</p>
+                
+                <h3>Each Keystroke is a Spore</h3>
+                <p>As you type, each character becomes a luminous node in the network—a point of creation pulsing with bioluminescent energy. Like spores released into fertile soil, your words take root and begin to spread, forming connections based on repetition and rhythm. Common letters create bright arterial pathways, while rare characters form delicate, sparse threads.</p>
+                
+                <h3>Typing Rhythm as Growth Pattern</h3>
+                <p>Fast bursts of typing generate dense, tangled clusters where threads interweave closely—like fungal colonies rapidly colonizing rich substrate. Pauses in your typing leave visible voids and gaps, places where the network thins and connections fade into shadow. The spatial distribution of nodes reflects your personal cadence, transforming typing speed into organic architecture.</p>
+                
+                <h3>Sacred Geometry Underlying Chaos</h3>
+                <p>Beneath the apparent organic chaos lies subtle sacred geometry—concentric circles radiating from the center, hexagonal lattices resonant with mycelial structure, mandala-like patterns emerging from repetition. This represents the underlying order in language: patterns, structures, and relationships that exist whether we perceive them or not.</p>
+                
+                <h3>Bird's-Eye View: The Ceremonial Archive</h3>
+                <p>Toggle to overhead perspective to witness the complete network as a unified organism—a cosmic map and ceremonial codex simultaneously. From above, the sacred geometry becomes obvious, revealing how your typing patterns create constellations of meaning. This is language made visible as mythic cartography.</p>
+                
+                <h3>Bioluminescence as Memory</h3>
+                <p>The glow of each node and connection represents linguistic memory—bright filaments mark frequently-traveled pathways, while dimmer threads show forgotten routes. The network never forgets; it only fades. Your complete input history remains visible as a glowing archive, a living record of every word you've contributed to the organism.</p>
+                
+                <h3>A Digital Monument by unearth.im</h3>
+                <p>This is the fourth digital monument from unearth.im, exploring language as something to be excavated, preserved, and celebrated. We transform the ephemeral act of typing into a permanent, glowing testament to human expression—revealing language not as static text but as dynamic, biological, interconnected life.</p>
+            </div>
+        </div>
+    </div>
 
-<body class="p-6 md:p-12 flex items-center justify-center min-h-screen">
-    <main class="max-w-3xl mx-auto text-center fade-in">
-        <header class="mb-12">
-            <h1 class="text-5xl md:text-7xl font-medium tracking-tight narrative-font">mycelia<span style="color: #A95C3D;">.im</span></h1>
-        </header>
+    <!-- Text Input -->
+    <div class="ui-overlay text-input-container" id="textInputContainer" style="display: none;">
+        <textarea class="text-input" id="textInput" placeholder="Begin typing to grow the network... Each keystroke becomes a luminous node." rows="3"></textarea>
+    </div>
+    
+    <!-- Stats Panel -->
+    <div class="ui-overlay stats-panel" id="statsPanel" style="display: none;">
+        <h3>Network Status</h3>
+        <div class="stat-line">
+            <span class="stat-label">Nodes:</span>
+            <span class="stat-value" id="nodeCount">0</span>
+        </div>
+        <div class="stat-line">
+            <span class="stat-label">Connections:</span>
+            <span class="stat-value" id="connectionCount">0</span>
+        </div>
+        <div class="stat-line">
+            <span class="stat-label">Characters:</span>
+            <span class="stat-value" id="charCount">0</span>
+        </div>
+    </div>
+    
+    <!-- Controls Bar -->
+    <div class="ui-overlay controls-bar" id="controlsBar" style="display: none;">
+        <div class="control-group">
+            <label class="control-label" for="intensitySlider">Intensity</label>
+            <input type="range" id="intensitySlider" class="slider" min="0.3" max="2" step="0.1" value="1">
+        </div>
+        <button class="btn" id="viewBtn" title="Toggle bird's-eye view (V)">Bird's Eye (V)</button>
+        <button class="btn" id="pauseBtn" title="Pause/resume animation (P)">Pause (P)</button>
+        <button class="btn" id="resetBtn" title="Clear network and start fresh">Reset</button>
+        <button class="btn" id="infoBtn" title="View artist statement (I)">Info (I)</button>
+        <button class="btn" id="saveHtmlBtn" title="Save network as interactive HTML file">Save as HTML</button>
+        <button class="btn" id="saveBtn" title="Save network as image">Save Image</button>
+    </div>
 
-        <article class="space-y-6 text-lg md:text-xl leading-relaxed text-gray-700 narrative-font">
-            <p>The forest's true strength is not in the trees you see, but in the invisible, intelligent network beneath the soil.</p>
-            <p>Mycelia are nature's decentralized communication network. A vast, resilient, and intelligent system that shares resources and information across an entire ecosystem, without a central point of control.</p>
-            <p>This is the landmark for the foundational communication layer of the new web. For the decentralized oracle network, the peer-to-peer messaging protocol, or the system that operates with the quiet, interconnected intelligence of a natural ecosystem.</p>
-        </article>
-        
-        <section class="mt-16">
-             <p class="font-semibold text-2xl md:text-3xl text-gray-800 narrative-font">For the intelligent network beneath.</p>
-        </section>
+    <!-- Footer Branding -->
+    <div class="footer-branding">
+        digital monument by <a href="https://unearth.im" target="_blank">unearth.im</a>
+    </div>
 
-        <section class="mt-12">
-            <a href="mailto:hello@unearth.im?subject=Inquiry%20for%20mycelia.im" class="btn btn-primary ui-font">
-                Grow the Network
-            </a>
-        </section>
-
-        <footer class="mt-16 pt-8 border-t border-gray-200">
-            <p class="ui-font text-sm text-gray-500">
-                An artifact unearthed by <a href="https://unearth.im/" target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-[#A95C3D] transition-colors"><span class="text-[#2E2E2E]">unearth</span><span class="text-[#A95C3D]">.im</span></a>
-            </p>
-        </footer>
-    </main>
+    <script src="app.js"></script>
 </body>
-
 </html>
