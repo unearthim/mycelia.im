@@ -3,361 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mycelia.im | The Living Archive</title>
+    <title>mycelia.im | Language as Organism</title>
     <meta name="description" content="Mycelia: A generative network where language grows as a living, bioluminescent organism.">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
     <style>
         :root {
-            --color-bg: #050505;
-            --color-panel: rgba(15, 15, 20, 0.8);
-            --color-border: rgba(100, 100, 100, 0.2);
-            --color-text-main: #e0e0e0;
-            --color-text-muted: #888899;
-            --color-accent: #d4af37; /* Antique Gold */
-            --color-highlight: #50e3c2; /* Biolum Teal */
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
             
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-mono: 'Space Mono', monospace;
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
             
-            --radius-sm: 4px;
-            --space-sm: 12px;
-            --space-md: 24px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            --radius-lg: 12px;
+            --radius-full: 9999px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-mono);
+            font-family: var(--font-family-base);
             overflow: hidden;
-            background: var(--color-bg);
-            color: var(--color-text-main);
-            font-size: 12px;
+            background: #0a0a0a;
+            color: rgba(200, 220, 240, 0.9);
         }
 
         #mycelialCanvas {
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            /* Deep organic vignette */
-            background: radial-gradient(circle at center, #111115 0%, #020203 80%);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1510 0%, #0a0a0a 70%);
             z-index: 1;
         }
 
-        /* --- UI LAYOUT --- */
-        
-        .ui-layer {
+        .ui-overlay {
             position: fixed;
             z-index: 10;
             pointer-events: none;
-            width: 100%;
-            height: 100%;
-            padding: var(--space-md);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
-        .ui-layer * { pointer-events: auto; }
+        .ui-overlay * { pointer-events: auto; }
 
-        /* Top Bar: Brand & Stats */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .brand-block h1 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            color: var(--color-text-main);
-            font-style: italic;
-        }
-        .brand-block .tagline {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--color-accent);
-            opacity: 0.8;
-            margin-top: 4px;
-        }
-
-        .stats-deck {
-            display: flex;
-            gap: 20px;
-            text-align: right;
-        }
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .stat-label {
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            letter-spacing: 0.1em;
-        }
-        .stat-value {
-            font-size: 0.9rem;
-            color: var(--color-highlight);
-        }
-
-        /* Bottom Deck: Controls & Input */
-        .bottom-deck {
-            display: grid;
-            grid-template-columns: 200px 1fr 200px;
-            gap: var(--space-md);
-            align-items: end;
-        }
-
-        /* Control Panel (Left) */
-        .control-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .btn-link {
-            background: none;
-            border: none;
-            color: var(--color-text-muted);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            text-align: left;
-            cursor: pointer;
-            padding: 4px 0;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        .btn-link:hover {
-            color: var(--color-accent);
-            padding-left: 5px;
-        }
-        .btn-link.active {
-            color: var(--color-highlight);
-        }
-
-        /* Input Area (Center) */
-        .input-stage {
-            display: flex;
-            justify-content: center;
-        }
-        .text-input {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-sm);
-            color: var(--color-text-main);
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            padding: 15px 20px;
-            width: 100%;
-            max-width: 600px;
-            outline: none;
-            transition: border-color 0.3s;
-            text-align: center;
-            resize: none;
-            backdrop-filter: blur(5px);
-        }
-        .text-input:focus {
-            border-color: var(--color-accent);
-        }
-        .text-input::placeholder {
-            color: rgba(255,255,255,0.15);
-            font-style: italic;
-            font-family: var(--font-serif);
-        }
-
-        /* Slider Area (Right) */
-        .settings-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-        }
-        .slider-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .slider-label {
-            color: var(--color-text-muted);
-            font-size: 0.7rem;
-        }
-        .slider {
-            -webkit-appearance: none;
-            width: 100px;
-            height: 2px;
-            background: var(--color-border);
-            outline: none;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            background: var(--color-accent);
-            cursor: pointer;
-            border-radius: 0; /* Square thumb for tech feel */
-        }
-
-        /* --- MODALS --- */
-
-        /* Intro Overlay */
+        /* Intro Modal */
         .intro-modal {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 5, 5, 0.95);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(12px);
             z-index: 200;
             display: flex; align-items: center; justify-content: center;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         .intro-modal.hidden { opacity: 0; visibility: hidden; }
 
-        .intro-card {
-            max-width: 600px;
-            text-align: center;
-            border: 1px solid var(--color-border);
-            padding: 60px;
-            position: relative;
-        }
-        /* Corners */
-        .intro-card::before, .intro-card::after {
-            content: ''; position: absolute; width: 10px; height: 10px;
-            border-color: var(--color-accent); border-style: solid;
-            transition: all 0.3s;
-        }
-        .intro-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
-        .intro-card::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+        .intro-content { max-width: 700px; padding: var(--space-32); text-align: center; }
 
-        .intro-card h1 {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            font-weight: 300;
-            color: var(--color-text-main);
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-        .intro-card .meta {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            color: var(--color-accent);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-        .intro-card p {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--color-text-muted);
-            margin-bottom: 40px;
-        }
-        .start-btn {
-            background: transparent;
-            border: 1px solid var(--color-text-muted);
-            color: var(--color-text-main);
-            padding: 12px 30px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .start-btn:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        .intro-content h1 {
+            font-size: 2.5rem; font-weight: 600;
+            color: rgba(50, 200, 220, 0.95); margin-bottom: var(--space-16);
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 20px rgba(50, 200, 220, 0.5);
         }
 
-        /* Mobile Adjustment */
+        .intro-content p {
+            font-size: 1rem; color: rgba(180, 200, 200, 0.85);
+            line-height: 1.7; margin-bottom: var(--space-16);
+        }
+
+        .begin-btn {
+            margin-top: var(--space-32); padding: 12px 32px;
+            font-size: 1rem; font-weight: 600;
+            background: rgba(30, 120, 140, 0.3);
+            color: rgba(80, 220, 240, 0.95);
+            border: 1px solid rgba(50, 200, 220, 0.4);
+            border-radius: 8px; cursor: pointer;
+            transition: all 0.3s ease; font-family: var(--font-family-base);
+        }
+        .begin-btn:hover {
+            background: rgba(30, 120, 140, 0.5);
+            border-color: rgba(50, 200, 220, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(50, 200, 220, 0.3);
+        }
+
+        /* Text Input */
+        .text-input-container {
+            bottom: var(--space-24); left: 50%;
+            transform: translateX(-50%); width: 90%; max-width: 700px;
+        }
+
+        .text-input {
+            width: 100%; padding: var(--space-16);
+            background: rgba(15, 25, 25, 0.85);
+            border: 1px solid rgba(50, 200, 220, 0.3);
+            border-radius: var(--radius-lg);
+            color: rgba(200, 230, 240, 0.95);
+            font-size: 14px; font-family: var(--font-family-base);
+            outline: none; backdrop-filter: blur(10px);
+            transition: all 0.3s ease; resize: none;
+        }
+        .text-input:focus {
+            border-color: rgba(50, 200, 220, 0.6);
+            box-shadow: 0 0 20px rgba(50, 200, 220, 0.2);
+        }
+
+        /* Controls Bar */
+        .controls-bar {
+            top: var(--space-24); right: var(--space-24);
+            display: flex; flex-direction: column; gap: 12px;
+            background: rgba(15, 25, 25, 0.85); padding: var(--space-16);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(50, 200, 220, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .control-group { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+        .control-label { font-size: 12px; color: rgba(150, 200, 190, 0.8); white-space: nowrap; }
+
+        .slider {
+            width: 120px; height: 4px; border-radius: var(--radius-full);
+            background: rgba(50, 100, 110, 0.3); outline: none; -webkit-appearance: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 14px; height: 14px;
+            border-radius: 50%; background: rgba(50, 200, 220, 0.9);
+            cursor: pointer; box-shadow: 0 2px 8px rgba(50, 200, 220, 0.5);
+        }
+
+        .btn {
+            padding: 8px 16px; font-size: 12px; font-weight: 500;
+            background: rgba(30, 120, 140, 0.2); color: rgba(80, 220, 240, 0.9);
+            border: 1px solid rgba(50, 200, 220, 0.3); border-radius: 8px;
+            cursor: pointer; transition: all 0.2s ease; font-family: var(--font-family-base);
+            white-space: nowrap; width: 100%;
+        }
+        .btn:hover { background: rgba(30, 120, 140, 0.4); border-color: rgba(50, 200, 220, 0.5); }
+        .btn:active { transform: scale(0.96); }
+
+        /* Stats Panel */
+        .stats-panel {
+            top: var(--space-24); left: var(--space-24);
+            background: rgba(15, 25, 25, 0.85); padding: var(--space-16);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(50, 200, 220, 0.3);
+            backdrop-filter: blur(10px); font-size: 12px;
+            color: rgba(150, 200, 190, 0.85); min-width: 200px;
+        }
+        .stats-panel h3 {
+            font-size: 14px; color: rgba(50, 200, 220, 0.9);
+            margin-bottom: 12px; font-weight: 600;
+        }
+        .stat-line { display: flex; justify-content: space-between; margin: 8px 0; }
+        .stat-value { color: rgba(80, 220, 240, 0.9); font-weight: 500; }
+
+        .footer-branding {
+            position: fixed; bottom: 16px; right: 24px;
+            font-size: 11px; color: rgba(50, 200, 220, 0.3);
+            z-index: 5; pointer-events: none; letter-spacing: 0.02em;
+        }
+        .footer-branding a { color: rgba(50, 200, 220, 0.4); text-decoration: none; pointer-events: auto; }
+        .footer-branding a:hover { color: rgba(50, 200, 220, 0.7); }
+
         @media (max-width: 768px) {
-            .bottom-deck {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .control-panel { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; order: 2; }
-            .settings-panel { align-items: center; order: 3; }
-            .input-stage { order: 1; }
-            .intro-card { padding: 30px; margin: 20px; }
+            .controls-bar { top: 12px; right: 12px; padding: 12px; }
+            .stats-panel { top: 12px; left: 12px; padding: 12px; min-width: 160px; }
+            .text-input-container { width: 95%; }
+        }
+
+        @font-face {
+            font-family: 'FKGroteskNeue';
+            src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
         }
     </style>
 </head>
 <body>
     <canvas id="mycelialCanvas"></canvas>
     
-    <!-- Intro Screen -->
+    <!-- Intro Modal -->
     <div class="intro-modal" id="introModal">
-        <div class="intro-card">
+        <div class="intro-content">
             <h1>mycelia.im</h1>
-            <div class="meta">Specimen No. 04 // Language Organism</div>
-            <p>You are about to enter a generative ecosystem. <br>
-            Here, your words do not sit on a page; they take root. <br>
-            Each keystroke releases a spore, weaving a bioluminescent network of memory and rhythm.</p>
-            <button class="start-btn" onclick="beginGrowing()">Initialize Growth</button>
+            <p style="text-transform: uppercase; letter-spacing: 0.2em; color: rgba(150, 200, 180, 0.8); margin-bottom: 20px; font-size: 0.8rem;">Language as Living Organism</p>
+            <p>A vast, luminous network spreading across dark, fertile ground.</p>
+            <p>Each keystroke becomes a glowing node, pulsing with energy. Fast bursts of typing weave dense clusters, while pauses leave open voids.</p>
+            <button class="begin-btn" onclick="beginGrowing()">Begin Growing</button>
         </div>
     </div>
     
-    <!-- Main UI -->
-    <div class="ui-layer" id="mainUI" style="opacity: 0; transition: opacity 1s;">
-        
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="brand-block">
-                <h1>mycelia</h1>
-                <div class="tagline">Digital Monument</div>
-            </div>
-            <div class="stats-deck">
-                <div class="stat-item">
-                    <span class="stat-label">Nodes</span>
-                    <span class="stat-value" id="nodeCount">0</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Threads</span>
-                    <span class="stat-value" id="connectionCount">0</span>
-                </div>
-            </div>
+    <!-- Text Input -->
+    <div class="ui-overlay text-input-container" id="textInputContainer" style="display: none;">
+        <textarea class="text-input" id="textInput" placeholder="Type to feed the network..." rows="3"></textarea>
+    </div>
+    
+    <!-- Stats Panel -->
+    <div class="ui-overlay stats-panel" id="statsPanel" style="display: none;">
+        <h3>Network Status</h3>
+        <div class="stat-line"><span class="stat-label">Nodes:</span><span class="stat-value" id="nodeCount">0</span></div>
+        <div class="stat-line"><span class="stat-label">Connections:</span><span class="stat-value" id="connectionCount">0</span></div>
+        <div class="stat-line"><span class="stat-label">Characters:</span><span class="stat-value" id="charCount">0</span></div>
+    </div>
+    
+    <!-- Controls Bar -->
+    <div class="ui-overlay controls-bar" id="controlsBar" style="display: none;">
+        <div class="control-group">
+            <label class="control-label" for="intensitySlider">Intensity</label>
+            <input type="range" id="intensitySlider" class="slider" min="0.3" max="2" step="0.1" value="1">
         </div>
+        <button class="btn" id="viewBtn">Bird's Eye (V)</button>
+        <button class="btn" id="pauseBtn">Pause (P)</button>
+        <button class="btn" id="resetBtn">Reset</button>
+        <button class="btn" id="saveHtmlBtn">Save Living Artifact</button>
+        <button class="btn" id="saveImgBtn">Save Image</button>
+    </div>
 
-        <!-- Bottom Deck -->
-        <div class="bottom-deck">
-            
-            <!-- Controls Left -->
-            <div class="control-panel">
-                <button class="btn-link" id="viewBtn">[V] VIEW: ORBIT</button>
-                <button class="btn-link" id="pauseBtn">[P] STATUS: LIVE</button>
-                <button class="btn-link" id="resetBtn">RESET SYSTEM</button>
-                <button class="btn-link" id="saveHtmlBtn">ARCHIVE ARTIFACT</button>
-                <button class="btn-link" id="saveImgBtn">CAPTURE FRAME</button>
-            </div>
-
-            <!-- Input Center -->
-            <div class="input-stage">
-                <textarea class="text-input" id="textInput" placeholder="Feed the network..." rows="1"></textarea>
-            </div>
-
-            <!-- Settings Right -->
-            <div class="settings-panel">
-                <div class="slider-group">
-                    <span class="slider-label">LUMENS</span>
-                    <input type="range" id="intensitySlider" class="slider" min="0.3" max="2" step="0.1" value="1">
-                </div>
-            </div>
-
-        </div>
+    <div class="footer-branding">
+        digital monument by <a href="https://unearth.im" target="_blank">unearth.im</a>
     </div>
 
     <script>
-        /**
-         * MYCELIA.IM
-         * Theme: Archival / Organic / Dark Mode
-         */
         const canvas = document.getElementById('mycelialCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -383,24 +251,22 @@
         const letterIndex = {}; 
         let characterCount = 0;
 
-        // Init Sacred Geometry (Rings)
         const geometryRings = [];
         for (let i = 0; i < 8; i++) {
             geometryRings.push({
                 radius: 100 + i * 80,
-                alpha: 0.03 + i * 0.005, // Very subtle
+                alpha: 0.05 + i * 0.005,
                 rotationSpeed: 0.0001 * (i % 2 === 0 ? 1 : -1),
                 rotation: 0,
                 hexagons: i % 2 === 0
             });
         }
 
-        // Colors: Shifted to slightly warmer/antique bioluminescence
         const biolumColors = [
-            { h: 170, s: 60, l: 50 }, // Teal
-            { h: 45, s: 60, l: 60 },  // Gold/Amber (New!)
-            { h: 200, s: 40, l: 60 }, // Pale Blue
-            { h: 150, s: 30, l: 55 }  // Sage Green
+            { h: 180, s: 70, l: 60 }, // cyan
+            { h: 140, s: 60, l: 55 }, // green
+            { h: 280, s: 60, l: 60 }, // purple
+            { h: 200, s: 50, l: 70 }  // white-blue
         ];
 
         class Node {
@@ -415,7 +281,7 @@
                 this.colorIndex = Math.floor(Math.random() * biolumColors.length);
                 this.pulsePhase = Math.random() * Math.PI * 2;
                 this.pulseSpeed = 0.002 + Math.random() * 0.001;
-                this.age = 0; 
+                this.age = 0; // Calculated in update
             }
             
             update() {
@@ -432,15 +298,13 @@
                 const screenY = height / 2 + (this.y - cameraY) * cameraZ;
                 const color = biolumColors[this.colorIndex];
                 
-                // Softer, more ethereal glow
-                const glowGradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, this.size * 4 * cameraZ);
-                glowGradient.addColorStop(0, `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.4 * intensity})`);
+                const glowGradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, this.size * 3 * cameraZ);
+                glowGradient.addColorStop(0, `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.6 * intensity})`);
                 glowGradient.addColorStop(1, `hsla(${color.h}, ${color.s}%, ${color.l}%, 0)`);
                 
                 ctx.fillStyle = glowGradient;
-                ctx.beginPath(); ctx.arc(screenX, screenY, this.size * 4 * cameraZ, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(screenX, screenY, this.size * 3 * cameraZ, 0, Math.PI * 2); ctx.fill();
                 
-                // Solid Core
                 ctx.fillStyle = `hsla(${color.h}, ${color.s}%, ${Math.min(color.l + 20, 90)}%, ${0.9 * intensity})`;
                 ctx.beginPath(); ctx.arc(screenX, screenY, this.size * cameraZ, 0, Math.PI * 2); ctx.fill();
             }
@@ -480,9 +344,8 @@
                 const shimmer = Math.sin(time * 0.003 + this.age) * 0.2 + 0.8;
                 const color = biolumColors[Math.floor((from.colorIndex + to.colorIndex) / 2)];
                 
-                // Very thin, organic lines
-                ctx.strokeStyle = `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.3 * intensity * shimmer})`;
-                ctx.lineWidth = Math.max(0.5, 1.5 * cameraZ);
+                ctx.strokeStyle = `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.4 * intensity * shimmer})`;
+                ctx.lineWidth = Math.max(1, 2 * cameraZ);
                 ctx.lineCap = 'round';
                 
                 const midX = (fromX + currentToX) / 2 + (Math.random() - 0.5) * 20 * cameraZ;
@@ -528,8 +391,7 @@
             geometryRings.forEach(ring => {
                 ring.rotation += ring.rotationSpeed;
                 ctx.save(); ctx.rotate(ring.rotation);
-                // Color matching the border style
-                ctx.strokeStyle = `rgba(100, 100, 100, ${ring.alpha * intensityMultiplier})`;
+                ctx.strokeStyle = `rgba(50, 150, 160, ${ring.alpha * intensityMultiplier})`;
                 ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.arc(0, 0, ring.radius * cameraZ, 0, Math.PI * 2); ctx.stroke();
                 
@@ -582,6 +444,7 @@
         function updateStats() {
             document.getElementById('nodeCount').textContent = nodes.length;
             document.getElementById('connectionCount').textContent = connections.length;
+            document.getElementById('charCount').textContent = characterCount;
         }
 
         let lastFrameTime = Date.now();
@@ -593,9 +456,9 @@
                 cameraZ += (targetCameraZ - cameraZ) * 0.05;
                 ctx.clearRect(0, 0, width, height);
                 
-                // Draw background (re-apply gradient to clear)
+                // Draw background
                 const bgGradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, Math.max(width, height) / 1.5);
-                bgGradient.addColorStop(0, '#111115'); bgGradient.addColorStop(1, '#020203');
+                bgGradient.addColorStop(0, '#1a1510'); bgGradient.addColorStop(0.7, '#0f0d0a'); bgGradient.addColorStop(1, '#0a0a0a');
                 ctx.fillStyle = bgGradient; ctx.fillRect(0, 0, width, height);
                 
                 drawGeometry();
@@ -618,10 +481,6 @@
         // UI Listeners
         document.getElementById('textInput').addEventListener('input', (e) => {
             const newText = e.target.value;
-            // Auto-resize height for input
-            e.target.style.height = 'auto';
-            e.target.style.height = (e.target.scrollHeight) + 'px';
-
             if (newText.length > characterCount) {
                 const addedChars = newText.slice(characterCount);
                 for (let char of addedChars) {
@@ -634,38 +493,31 @@
         });
 
         document.getElementById('intensitySlider').addEventListener('input', (e) => intensityMultiplier = parseFloat(e.target.value));
-        
-        document.getElementById('viewBtn').addEventListener('click', (e) => {
+        document.getElementById('viewBtn').addEventListener('click', () => {
             isBirdsEye = !isBirdsEye; targetCameraZ = isBirdsEye ? 0.3 : 1;
-            e.target.textContent = isBirdsEye ? '[V] VIEW: DETAIL' : "[V] VIEW: ORBIT";
-            e.target.classList.toggle('active');
+            document.getElementById('viewBtn').textContent = isBirdsEye ? 'Normal View' : "Bird's Eye (V)";
         });
-        
-        document.getElementById('pauseBtn').addEventListener('click', (e) => {
-            isPaused = !isPaused; 
-            e.target.textContent = isPaused ? '[P] STATUS: FROZEN' : '[P] STATUS: LIVE';
-            e.target.classList.toggle('active');
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            isPaused = !isPaused; document.getElementById('pauseBtn').textContent = isPaused ? 'Resume (P)' : 'Pause (P)';
             if (!isPaused) lastFrameTime = Date.now();
         });
-
         document.getElementById('resetBtn').addEventListener('click', () => {
             nodes.length = 0; connections.length = 0; particles.length = 0;
             for (let key in letterIndex) delete letterIndex[key];
             characterCount = 0; document.getElementById('textInput').value = '';
             updateStats();
         });
-        
         document.getElementById('saveImgBtn').addEventListener('click', () => {
             const link = document.createElement('a');
             link.download = `mycelia-${Date.now()}.png`;
             link.href = canvas.toDataURL(); link.click();
         });
 
-        // CRYOSTASIS EXPORT LOGIC (Updated for new UI)
+        // CRYOSTASIS EXPORT LOGIC
         document.getElementById('saveHtmlBtn').addEventListener('click', () => {
-            // 1. Serialize
+            // 1. Serialize current network state
             const currentData = {
-                nodes: nodes.map(n => ({ ...n })),
+                nodes: nodes.map(n => ({ ...n })), // Clone props
                 connections: connections.map(c => ({
                     fromIndex: nodes.indexOf(c.fromNode),
                     toIndex: nodes.indexOf(c.toNode),
@@ -676,7 +528,7 @@
                 stats: { charCount: characterCount }
             };
 
-            // 2. Capture DOM
+            // 2. Capture DOM Shell (Clone)
             const parser = new DOMParser();
             const doc = parser.parseFromString(document.documentElement.outerHTML, 'text/html');
             
@@ -686,14 +538,10 @@
             script.type = 'application/json';
             script.textContent = JSON.stringify(currentData);
             doc.body.appendChild(script);
-            
-            // 4. Ensure UI is ready in clone
-            // Remove the hidden class or opacity style from mainUI so it shows up immediately in the file
-            const ui = doc.getElementById('mainUI');
-            if(ui) ui.style.opacity = '1';
-            const intro = doc.getElementById('introModal');
-            if(intro) intro.remove(); // Kill intro for export
 
+            // 4. Modify startup to check for data
+            // We rely on the logic below (Initialization) to detect this script tag
+            
             const blob = new Blob([doc.documentElement.outerHTML], {type: 'text/html'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -703,9 +551,10 @@
 
         function beginGrowing() {
             document.getElementById('introModal').classList.add('hidden');
-            const ui = document.getElementById('mainUI');
-            ui.style.opacity = 1;
-            setTimeout(() => document.getElementById('textInput').focus(), 500);
+            document.getElementById('textInputContainer').style.display = 'block';
+            document.getElementById('statsPanel').style.display = 'block';
+            document.getElementById('controlsBar').style.display = 'flex';
+            setTimeout(() => document.getElementById('textInput').focus(), 300);
         }
 
         window.addEventListener('resize', () => {
@@ -725,8 +574,15 @@
                     if (savedData.nodes) {
                         savedData.nodes.forEach(data => {
                             const n = new Node(data.char, data.x, data.y, data.velocity);
+                            // Adjust creation time to preserve relative age
+                            const age = (data.creationTime - savedData.nodes[0].creationTime) || 0; // Rough approx relative to first
+                            // Better: calculate age from saved data relative to saved Time?
+                            // Fallback: Just use visual props
                             Object.assign(n, data);
-                            n.creationTime = now; 
+                            // Reset creation time relative to NOW so animation continues smoothly
+                            // We assume 'age' was correct at save. 
+                            // n.creationTime = now - (n.age * 1000); // Reverse engineer
+                            n.creationTime = now; // Simple restart for pulse sync, or keep old?
                             nodes.push(n);
                         });
                     }
@@ -757,13 +613,8 @@
                     if (savedData.stats) characterCount = savedData.stats.charCount;
                     
                     updateStats();
+                    beginGrowing(); // Skip intro
                     
-                    // Bypass intro
-                    const intro = document.getElementById('introModal');
-                    if(intro) intro.classList.add('hidden');
-                    const ui = document.getElementById('mainUI');
-                    if(ui) ui.style.opacity = 1;
-
                 } catch (e) { console.error("Thaw failed:", e); }
             }
         });
