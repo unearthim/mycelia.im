@@ -114,6 +114,8 @@
             grid-template-columns: 200px 1fr 200px;
             gap: var(--space-md);
             align-items: end;
+            /* Ensure we have space for the footer */
+            padding-bottom: 20px; 
         }
 
         /* Control Panel (Left) */
@@ -204,6 +206,34 @@
             background: var(--color-accent);
             cursor: pointer;
             border-radius: 0; /* Square thumb for tech feel */
+        }
+
+        /* Footer Brand Stamp */
+        .footer-brand {
+            position: fixed;
+            bottom: 12px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            opacity: 0.4;
+            letter-spacing: 0.2em;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .footer-brand a {
+            color: inherit;
+            text-decoration: none;
+            pointer-events: auto;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+        .footer-brand a:hover {
+            color: var(--color-accent);
+            border-color: var(--color-accent);
+            opacity: 1;
         }
 
         /* --- MODALS --- */
@@ -351,6 +381,11 @@
             </div>
 
         </div>
+    </div>
+
+    <!-- Footer Brand Stamp -->
+    <div class="footer-brand">
+        ARCHIVE ORIGIN // <a href="https://unearth.im" target="_blank">UNEARTH.IM</a>
     </div>
 
     <script>
