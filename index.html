@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script type="application/ld+json">
     {
@@ -32,7 +33,8 @@
         {
           "@type": "Organization",
           "@id": "https://unearth.im/#organization",
-          "name": "unearth.im",
+          "name": "Unearth Heritage Foundry",
+"alternateName": ["Unearth Foundry","Archive & Anvil","Unearth Anvil","Unearth Works","Cultural Infrastructure Foundry"],
           "url": "https://unearth.im",
           "logo": {
             "@type": "ImageObject",
@@ -69,12 +71,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mycelia.im | The Living Archive</title>
-    <meta name="description" content="Mycelia: A generative network where language grows as a living, bioluminescent organism.">
-    
+    <meta name="description"
+        content="Mycelia: A generative network where language grows as a living, bioluminescent organism.">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -83,18 +88,24 @@
             --color-border: rgba(100, 100, 100, 0.2);
             --color-text-main: #e0e0e0;
             --color-text-muted: #888899;
-            --color-accent: #d4af37; /* Antique Gold */
-            --color-highlight: #50e3c2; /* Biolum Teal */
-            
+            --color-accent: #d4af37;
+            /* Antique Gold */
+            --color-highlight: #50e3c2;
+            /* Biolum Teal */
+
             --font-serif: 'Cormorant Garamond', serif;
             --font-mono: 'Space Mono', monospace;
-            
+
             --radius-sm: 4px;
             --space-sm: 12px;
             --space-md: 24px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: var(--font-mono);
@@ -106,15 +117,17 @@
 
         #mycelialCanvas {
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             /* Deep organic vignette */
             background: radial-gradient(circle at center, #111115 0%, #020203 80%);
             z-index: 1;
         }
 
         /* --- UI LAYOUT --- */
-        
+
         .ui-layer {
             position: fixed;
             z-index: 10;
@@ -126,7 +139,10 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        .ui-layer * { pointer-events: auto; }
+
+        .ui-layer * {
+            pointer-events: auto;
+        }
 
         /* Top Bar: Brand & Stats */
         .top-bar {
@@ -143,6 +159,7 @@
             color: var(--color-text-main);
             font-style: italic;
         }
+
         .brand-block .tagline {
             font-family: var(--font-mono);
             font-size: 0.65rem;
@@ -158,16 +175,19 @@
             gap: 20px;
             text-align: right;
         }
+
         .stat-item {
             display: flex;
             flex-direction: column;
         }
+
         .stat-label {
             font-size: 0.6rem;
             text-transform: uppercase;
             color: var(--color-text-muted);
             letter-spacing: 0.1em;
         }
+
         .stat-value {
             font-size: 0.9rem;
             color: var(--color-highlight);
@@ -180,7 +200,7 @@
             gap: var(--space-md);
             align-items: end;
             /* Ensure we have space for the footer */
-            padding-bottom: 20px; 
+            padding-bottom: 20px;
         }
 
         /* Control Panel (Left) */
@@ -189,7 +209,7 @@
             flex-direction: column;
             gap: 8px;
         }
-        
+
         .btn-link {
             background: none;
             border: none;
@@ -203,10 +223,12 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
+
         .btn-link:hover {
             color: var(--color-accent);
             padding-left: 5px;
         }
+
         .btn-link.active {
             color: var(--color-highlight);
         }
@@ -216,8 +238,9 @@
             display: flex;
             justify-content: center;
         }
+
         .text-input {
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-sm);
             color: var(--color-text-main);
@@ -232,11 +255,13 @@
             resize: none;
             backdrop-filter: blur(5px);
         }
+
         .text-input:focus {
             border-color: var(--color-accent);
         }
+
         .text-input::placeholder {
-            color: rgba(255,255,255,0.15);
+            color: rgba(255, 255, 255, 0.15);
             font-style: italic;
             font-family: var(--font-serif);
         }
@@ -248,15 +273,18 @@
             align-items: flex-end;
             gap: 10px;
         }
+
         .slider-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .slider-label {
             color: var(--color-text-muted);
             font-size: 0.7rem;
         }
+
         .slider {
             -webkit-appearance: none;
             width: 100px;
@@ -264,13 +292,15 @@
             background: var(--color-border);
             outline: none;
         }
+
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 10px;
             height: 10px;
             background: var(--color-accent);
             cursor: pointer;
-            border-radius: 0; /* Square thumb for tech feel */
+            border-radius: 0;
+            /* Square thumb for tech feel */
         }
 
         /* Footer Brand Stamp */
@@ -288,6 +318,7 @@
             pointer-events: none;
             z-index: 20;
         }
+
         .footer-brand a {
             color: inherit;
             text-decoration: none;
@@ -295,6 +326,7 @@
             border-bottom: 1px solid transparent;
             transition: all 0.3s;
         }
+
         .footer-brand a:hover {
             color: var(--color-accent);
             border-color: var(--color-accent);
@@ -306,13 +338,22 @@
         /* Intro Overlay */
         .intro-modal {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background: rgba(5, 5, 5, 0.95);
             z-index: 200;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        .intro-modal.hidden { opacity: 0; visibility: hidden; }
+
+        .intro-modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
         .intro-card {
             max-width: 600px;
@@ -321,14 +362,30 @@
             padding: 60px;
             position: relative;
         }
+
         /* Corners */
-        .intro-card::before, .intro-card::after {
-            content: ''; position: absolute; width: 10px; height: 10px;
-            border-color: var(--color-accent); border-style: solid;
+        .intro-card::before,
+        .intro-card::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: var(--color-accent);
+            border-style: solid;
             transition: all 0.3s;
         }
-        .intro-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
-        .intro-card::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+        .intro-card::before {
+            top: -1px;
+            left: -1px;
+            border-width: 1px 0 0 1px;
+        }
+
+        .intro-card::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 1px 1px 0;
+        }
 
         .intro-card h1 {
             font-family: var(--font-serif);
@@ -338,6 +395,7 @@
             margin-bottom: 10px;
             font-style: italic;
         }
+
         .intro-card .meta {
             font-family: var(--font-mono);
             font-size: 0.7rem;
@@ -346,6 +404,7 @@
             margin-bottom: 30px;
             text-transform: uppercase;
         }
+
         .intro-card p {
             font-family: var(--font-serif);
             font-size: 1.1rem;
@@ -353,6 +412,7 @@
             color: var(--color-text-muted);
             margin-bottom: 40px;
         }
+
         .start-btn {
             background: transparent;
             border: 1px solid var(--color-text-muted);
@@ -365,6 +425,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .start-btn:hover {
             border-color: var(--color-accent);
             color: var(--color-accent);
@@ -377,31 +438,50 @@
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
-            .control-panel { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; order: 2; }
-            .settings-panel { align-items: center; order: 3; }
-            .input-stage { order: 1; }
-            .intro-card { padding: 30px; margin: 20px; }
+
+            .control-panel {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                order: 2;
+            }
+
+            .settings-panel {
+                align-items: center;
+                order: 3;
+            }
+
+            .input-stage {
+                order: 1;
+            }
+
+            .intro-card {
+                padding: 30px;
+                margin: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
     <canvas id="mycelialCanvas"></canvas>
-    
+
     <!-- Intro Screen -->
     <div class="intro-modal" id="introModal">
         <div class="intro-card">
             <h1>mycelia.im</h1>
             <div class="meta">Specimen No. 04 // Language Organism</div>
             <p>You are about to enter a generative ecosystem. <br>
-            Here, your words do not sit on a page; they take root. <br>
-            Each keystroke releases a spore, weaving a bioluminescent network of memory and rhythm.</p>
+                Here, your words do not sit on a page; they take root. <br>
+                Each keystroke releases a spore, weaving a bioluminescent network of memory and rhythm.</p>
             <button class="start-btn" onclick="beginGrowing()">Initialize Growth</button>
         </div>
     </div>
-    
+
     <!-- Main UI -->
     <div class="ui-layer" id="mainUI" style="opacity: 0; transition: opacity 1s;">
-        
+
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="brand-block">
@@ -422,7 +502,7 @@
 
         <!-- Bottom Deck -->
         <div class="bottom-deck">
-            
+
             <!-- Controls Left -->
             <div class="control-panel">
                 <button class="btn-link" id="viewBtn">[V] VIEW: ORBIT</button>
@@ -451,7 +531,10 @@
     <!-- Footer Brand Stamp -->
     <div class="footer-brand">
         <small>
-            a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer">liminal mind meld</a></b> collaboration: digital monument by <b><a href="https://unearth.im" target="_blank" rel="noopener noreferrer">UNEARTH.IM</a></b> | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener noreferrer">archive & anvil</a></b>
+            a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer">liminal mind
+                    meld</a></b> collaboration: digital monument by <b><a href="https://unearth.im" target="_blank"
+                    rel="noopener noreferrer">UNEARTH.IM</a></b> | <b><a href="https://archaeobytology.org"
+                    target="_blank" rel="noopener noreferrer">archive & anvil</a></b>
         </small>
     </div>
 
@@ -482,7 +565,7 @@
         const nodes = [];
         const connections = [];
         const particles = [];
-        const letterIndex = {}; 
+        const letterIndex = {};
         let characterCount = 0;
 
         // Init Sacred Geometry (Rings)
@@ -517,31 +600,31 @@
                 this.colorIndex = Math.floor(Math.random() * biolumColors.length);
                 this.pulsePhase = Math.random() * Math.PI * 2;
                 this.pulseSpeed = 0.002 + Math.random() * 0.001;
-                this.age = 0; 
+                this.age = 0;
             }
-            
+
             update() {
                 this.age = (time - this.creationTime) / 1000;
                 this.glowIntensity = Math.max(0.3, 1 - this.age / 100);
             }
-            
+
             draw() {
                 this.update();
                 const pulse = Math.sin(time * this.pulseSpeed + this.pulsePhase) * 0.2 + 0.8;
                 const intensity = this.glowIntensity * pulse * intensityMultiplier;
-                
+
                 const screenX = width / 2 + (this.x - cameraX) * cameraZ;
                 const screenY = height / 2 + (this.y - cameraY) * cameraZ;
                 const color = biolumColors[this.colorIndex];
-                
+
                 // Softer, more ethereal glow
                 const glowGradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, this.size * 4 * cameraZ);
                 glowGradient.addColorStop(0, `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.4 * intensity})`);
                 glowGradient.addColorStop(1, `hsla(${color.h}, ${color.s}%, ${color.l}%, 0)`);
-                
+
                 ctx.fillStyle = glowGradient;
                 ctx.beginPath(); ctx.arc(screenX, screenY, this.size * 4 * cameraZ, 0, Math.PI * 2); ctx.fill();
-                
+
                 // Solid Core
                 ctx.fillStyle = `hsla(${color.h}, ${color.s}%, ${Math.min(color.l + 20, 90)}%, ${0.9 * intensity})`;
                 ctx.beginPath(); ctx.arc(screenX, screenY, this.size * cameraZ, 0, Math.PI * 2); ctx.fill();
@@ -558,38 +641,38 @@
                 this.brightness = 0.5 + Math.random() * 0.5;
                 this.age = 0;
             }
-            
+
             update() {
                 this.age = (time - this.creationTime) / 1000;
                 if (this.growthProgress < 1) this.growthProgress += 0.05;
             }
-            
+
             draw() {
                 this.update();
                 const from = this.fromNode;
                 const to = this.toNode;
-                
+
                 const fromX = width / 2 + (from.x - cameraX) * cameraZ;
                 const fromY = height / 2 + (from.y - cameraY) * cameraZ;
                 const toX = width / 2 + (to.x - cameraX) * cameraZ;
                 const toY = height / 2 + (to.y - cameraY) * cameraZ;
-                
+
                 const currentToX = fromX + (toX - fromX) * this.growthProgress;
                 const currentToY = fromY + (toY - fromY) * this.growthProgress;
-                
+
                 const avgGlow = (from.glowIntensity + to.glowIntensity) / 2;
                 const intensity = avgGlow * this.brightness * intensityMultiplier;
                 const shimmer = Math.sin(time * 0.003 + this.age) * 0.2 + 0.8;
                 const color = biolumColors[Math.floor((from.colorIndex + to.colorIndex) / 2)];
-                
+
                 // Very thin, organic lines
                 ctx.strokeStyle = `hsla(${color.h}, ${color.s}%, ${color.l}%, ${0.3 * intensity * shimmer})`;
                 ctx.lineWidth = Math.max(0.5, 1.5 * cameraZ);
                 ctx.lineCap = 'round';
-                
+
                 const midX = (fromX + currentToX) / 2 + (Math.random() - 0.5) * 20 * cameraZ;
                 const midY = (fromY + currentToY) / 2 + (Math.random() - 0.5) * 20 * cameraZ;
-                
+
                 ctx.beginPath();
                 ctx.moveTo(fromX, fromY);
                 ctx.quadraticCurveTo(midX, midY, currentToX, currentToY);
@@ -634,7 +717,7 @@
                 ctx.strokeStyle = `rgba(100, 100, 100, ${ring.alpha * intensityMultiplier})`;
                 ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.arc(0, 0, ring.radius * cameraZ, 0, Math.PI * 2); ctx.stroke();
-                
+
                 if (ring.hexagons) {
                     for (let i = 0; i < 6; i++) {
                         const angle = (i / 6) * Math.PI * 2;
@@ -653,9 +736,9 @@
             const timeSinceLastKey = lastKeystrokeTime ? currentTime - lastKeystrokeTime : 0;
             const velocity = timeSinceLastKey > 0 ? Math.min(10, 1000 / timeSinceLastKey) : 1;
             lastKeystrokeTime = currentTime;
-            
+
             let nodeX, nodeY;
-            if (nodes.length === 0) { nodeX = 0; nodeY = 0; } 
+            if (nodes.length === 0) { nodeX = 0; nodeY = 0; }
             else {
                 const lastNode = nodes[nodes.length - 1];
                 const angle = (characterCount * 0.5) + (Math.random() - 0.5) * 0.3;
@@ -663,11 +746,11 @@
                 nodeX = lastNode.x + Math.cos(angle) * distance;
                 nodeY = lastNode.y + Math.sin(angle) * distance;
             }
-            
+
             const node = new Node(char, nodeX, nodeY, velocity);
             nodes.push(node);
             characterCount++;
-            
+
             const lowerChar = char.toLowerCase();
             if (letterIndex[lowerChar]) {
                 letterIndex[lowerChar].forEach(prevNode => {
@@ -676,7 +759,7 @@
             }
             if (!letterIndex[lowerChar]) letterIndex[lowerChar] = [];
             letterIndex[lowerChar].push(node);
-            
+
             for (let i = 0; i < 8; i++) particles.push(new Particle(nodeX, nodeY));
             updateStats();
         }
@@ -694,12 +777,12 @@
                 time = currentTime;
                 cameraZ += (targetCameraZ - cameraZ) * 0.05;
                 ctx.clearRect(0, 0, width, height);
-                
+
                 // Draw background (re-apply gradient to clear)
                 const bgGradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, Math.max(width, height) / 1.5);
                 bgGradient.addColorStop(0, '#111115'); bgGradient.addColorStop(1, '#020203');
                 ctx.fillStyle = bgGradient; ctx.fillRect(0, 0, width, height);
-                
+
                 drawGeometry();
                 connections.forEach(conn => conn.draw());
                 nodes.forEach(node => node.draw());
@@ -736,15 +819,15 @@
         });
 
         document.getElementById('intensitySlider').addEventListener('input', (e) => intensityMultiplier = parseFloat(e.target.value));
-        
+
         document.getElementById('viewBtn').addEventListener('click', (e) => {
             isBirdsEye = !isBirdsEye; targetCameraZ = isBirdsEye ? 0.3 : 1;
             e.target.textContent = isBirdsEye ? '[V] VIEW: DETAIL' : "[V] VIEW: ORBIT";
             e.target.classList.toggle('active');
         });
-        
+
         document.getElementById('pauseBtn').addEventListener('click', (e) => {
-            isPaused = !isPaused; 
+            isPaused = !isPaused;
             e.target.textContent = isPaused ? '[P] STATUS: FROZEN' : '[P] STATUS: LIVE';
             e.target.classList.toggle('active');
             if (!isPaused) lastFrameTime = Date.now();
@@ -756,7 +839,7 @@
             characterCount = 0; document.getElementById('textInput').value = '';
             updateStats();
         });
-        
+
         document.getElementById('saveImgBtn').addEventListener('click', () => {
             const link = document.createElement('a');
             link.download = `mycelia-${Date.now()}.png`;
@@ -781,22 +864,22 @@
             // 2. Capture DOM
             const parser = new DOMParser();
             const doc = parser.parseFromString(document.documentElement.outerHTML, 'text/html');
-            
+
             // 3. Bake state
             const script = doc.createElement('script');
             script.id = 'cryostasis-data';
             script.type = 'application/json';
             script.textContent = JSON.stringify(currentData);
             doc.body.appendChild(script);
-            
+
             // 4. Ensure UI is ready in clone
             // Remove the hidden class or opacity style from mainUI so it shows up immediately in the file
             const ui = doc.getElementById('mainUI');
-            if(ui) ui.style.opacity = '1';
+            if (ui) ui.style.opacity = '1';
             const intro = doc.getElementById('introModal');
-            if(intro) intro.remove(); // Kill intro for export
+            if (intro) intro.remove(); // Kill intro for export
 
-            const blob = new Blob([doc.documentElement.outerHTML], {type: 'text/html'});
+            const blob = new Blob([doc.documentElement.outerHTML], { type: 'text/html' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'mycelia-artifact.html';
@@ -828,7 +911,7 @@
                         savedData.nodes.forEach(data => {
                             const n = new Node(data.char, data.x, data.y, data.velocity);
                             Object.assign(n, data);
-                            n.creationTime = now; 
+                            n.creationTime = now;
                             nodes.push(n);
                         });
                     }
@@ -841,12 +924,12 @@
                             if (from && to) {
                                 const c = new Connection(from, to, data.letter);
                                 Object.assign(c, data);
-                                c.creationTime = now; 
+                                c.creationTime = now;
                                 connections.push(c);
                             }
                         });
                     }
-                    
+
                     // Restore Index
                     nodes.forEach(n => {
                         const l = n.char.toLowerCase();
@@ -857,14 +940,14 @@
                     // Restore UI
                     if (savedData.text) document.getElementById('textInput').value = savedData.text;
                     if (savedData.stats) characterCount = savedData.stats.charCount;
-                    
+
                     updateStats();
-                    
+
                     // Bypass intro
                     const intro = document.getElementById('introModal');
-                    if(intro) intro.classList.add('hidden');
+                    if (intro) intro.classList.add('hidden');
                     const ui = document.getElementById('mainUI');
-                    if(ui) ui.style.opacity = 1;
+                    if (ui) ui.style.opacity = 1;
 
                 } catch (e) { console.error("Thaw failed:", e); }
             }
@@ -873,4 +956,5 @@
         animate();
     </script>
 </body>
+
 </html>
